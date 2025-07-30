@@ -1,4 +1,4 @@
-CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'Dilshi@2000'
+CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'password'
 
 CREATE DATABASE SCOPED CREDENTIAL cred_dilshi
 WITH
@@ -25,112 +25,68 @@ WITH
         DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'
     )
 
-------------------------------------------------
-----CREATE EXTERNAL TABLE EXTSALES--------------
-------------------------------------------------
-CREATE EXTERNAL TABLE gold.extsales
-WITH
-(
-    LOCATION = 'extsales',
-    DATA_SOURCE = source_gold,
-    FILE_FORMAT = format_parquet
-)
-AS SELECT * FROM gold.sales
-
-SELECT * FROM gold.sales
-------------------------------------------------
-----CREATE EXTERNAL TABLE EXTCALENDER--------------
-------------------------------------------------
-CREATE EXTERNAL TABLE gold.extcalender
-WITH
-(
-    LOCATION = 'extcalender',
-    DATA_SOURCE = source_gold,
-    FILE_FORMAT = format_parquet
-)
-AS SELECT * FROM gold.calender
 
 ------------------------------------------------
-----CREATE EXTERNAL TABLE EXTCUSTOMER--------------
+----CREATE EXTERNAL TABLE EXTDIMDATES-----------
 ------------------------------------------------
-CREATE EXTERNAL TABLE gold.extcustomer
+CREATE EXTERNAL TABLE gold.extdimdates
 WITH
 (
-    LOCATION = 'extcustomer',
+    LOCATION = 'extdimdates',
     DATA_SOURCE = source_gold,
     FILE_FORMAT = format_parquet
 )
-AS SELECT * FROM gold.customers
+AS SELECT * FROM gold.dim_dates
 
-----------------------------------------------------------
-----CREATE EXTERNAL TABLE PRODUCT CATEGORIES--------------
-----------------------------------------------------------
-CREATE EXTERNAL TABLE gold.ext_productcategories
-WITH
-(
-    LOCATION = 'ext_productcategories',
-    DATA_SOURCE = source_gold,
-    FILE_FORMAT = format_parquet
-)
-AS SELECT * FROM gold.product_categories
-
---------------------------------------------------------------
-----CREATE EXTERNAL TABLE PRODUCT SUB CATEGORIES--------------
---------------------------------------------------------------
-CREATE EXTERNAL TABLE gold.ext_productsubcategories
-WITH
-(
-    LOCATION = 'ext_productsubcategories',
-    DATA_SOURCE = source_gold,
-    FILE_FORMAT = format_parquet
-)
-AS SELECT * FROM gold.product_sub_categories
 
 -------------------------------------------------
-----CREATE EXTERNAL TABLE PRODUCTS --------------
+----CREATE EXTERNAL TABLE EXTDIMCUSTOMER---------
 -------------------------------------------------
-CREATE EXTERNAL TABLE gold.extproducts
+CREATE EXTERNAL TABLE gold.extdimcustomer
 WITH
 (
-    LOCATION = 'extproducts',
+    LOCATION = 'extdimcustomer',
     DATA_SOURCE = source_gold,
     FILE_FORMAT = format_parquet
 )
-AS SELECT * FROM gold.products
+AS SELECT * FROM gold.dim_customers
+
+
 
 -------------------------------------------------
-----CREATE EXTERNAL TABLE RETURNS ---------------
+----CREATE EXTERNAL TABLE EXTDIMPRODUCT ---------
 -------------------------------------------------
-CREATE EXTERNAL TABLE gold.extreturns
+CREATE EXTERNAL TABLE gold.extdimproducts
 WITH
 (
-    LOCATION = 'extreturns',
+    LOCATION = 'extdimproducts',
     DATA_SOURCE = source_gold,
     FILE_FORMAT = format_parquet
 )
-AS SELECT * FROM gold.returns
+AS SELECT * FROM gold.dim_products
+
 
 -------------------------------------------------
 ----CREATE EXTERNAL TABLE TERRITORIES -----------
 -------------------------------------------------
-CREATE EXTERNAL TABLE gold.ext_territories
+CREATE EXTERNAL TABLE gold.extdimterritories
 WITH
 (
-    LOCATION = 'ext_territories',
+    LOCATION = 'extdimterritories',
     DATA_SOURCE = source_gold,
     FILE_FORMAT = format_parquet
 )
-AS SELECT * FROM gold.territories
+AS SELECT * FROM gold.dim_territories
 
-
-
-
-
-
-
-
-
-
-
-
+------------------------------------------------
+----CREATE EXTERNAL TABLE EXTFACTSALES----------
+------------------------------------------------
+CREATE EXTERNAL TABLE gold.extfactsales
+WITH
+(
+    LOCATION = 'extfactsales',
+    DATA_SOURCE = source_gold,
+    FILE_FORMAT = format_parquet
+)
+AS SELECT * FROM gold.fact_sales
 
